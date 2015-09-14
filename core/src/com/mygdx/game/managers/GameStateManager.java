@@ -15,7 +15,7 @@ public class GameStateManager {
     public static final int PLAY = 1;
 
     public GameStateManager() {
-        setState(MENU);
+        setState(PLAY);
     }
 
     public void setState(int state) {
