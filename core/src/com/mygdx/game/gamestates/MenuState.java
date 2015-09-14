@@ -1,6 +1,8 @@
 package com.mygdx.game.gamestates;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -17,7 +19,7 @@ public class MenuState extends GameState {
     private BitmapFont titleFont;
     private BitmapFont font;
 
-    private final String title = "Låd Leif";
+    private final String title = "Låd-Leif";
 
     private int currentItem;
     private String[] menuItems;
@@ -46,9 +48,7 @@ public class MenuState extends GameState {
 
     @Override
     public void update(float dt) {
-
         handleInput();
-
     }
 
     @Override
@@ -75,7 +75,18 @@ public class MenuState extends GameState {
 
     @Override
     public void handleInput() {
-        //Handle input
+        if(Gdx.input.isKeyJustPressed(Input.Keys.UP)){
+            if(currentItem > 0) {
+                currentItem--;
+                return;
+            }
+        }
+        if(Gdx.input.isKeyJustPressed(Input.Keys.DOWN)){
+            if(currentItem < menuItems.length-1) {
+                currentItem++;
+                return;
+            }
+        }
     }
 
     @Override
