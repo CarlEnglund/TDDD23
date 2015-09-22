@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="16" height="16" tilewidth="32" tileheight="32" nextobjectid="9">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="16" height="16" tilewidth="32" tileheight="32" nextobjectid="14">
  <tileset firstgid="1" name="SuperTile" tilewidth="32" tileheight="32" tilecount="42">
   <image source="cave_tiles.png" width="254" height="204"/>
  </tileset>
@@ -8,7 +8,7 @@
    eJxjYmBgYKIQkwuYgZhxGOvnHGD76a2fkH/R5Qeb+4eifgEKMQBIgwF1
   </data>
  </layer>
- <objectgroup name="Object Layer 1">
+ <objectgroup name="collision-layer">
   <object id="2" x="483" y="33">
    <polyline points="0,0 -1,446 -450,447 -452,1 1,1"/>
   </object>
