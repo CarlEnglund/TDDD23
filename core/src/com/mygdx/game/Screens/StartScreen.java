@@ -17,7 +17,7 @@ public class StartScreen implements Screen {
     public StartScreen() {
         super();
         batch = new SpriteBatch();
-        splash = new Texture("splash.png");
+        splash = new Texture("assets/splash.png");
     }
 
 
