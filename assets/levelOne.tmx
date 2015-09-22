@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="16" height="16" tilewidth="32" tileheight="32" nextobjectid="9">
+ <tileset firstgid="1" name="SuperTile" tilewidth="32" tileheight="32" tilecount="42">
+  <image source="cave_tiles.png" width="254" height="204"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="16" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxjYmBgYKIQkwuYgZhxGOvnHGD76a2fkH/R5Qeb+4eifgEKMQBIgwF1
+  </data>
+ </layer>
+ <objectgroup name="Object Layer 1">
+  <object id="2" x="483" y="33">
+   <polyline points="0,0 -1,446 -450,447 -452,1 1,1"/>
+  </object>
+  <object id="4" x="224" y="196"/>
+  <object id="6" x="295" y="292"/>
+  <object id="7" x="141" y="305"/>
+  <object id="8" x="342" y="153"/>
+ </objectgroup>
+</map>

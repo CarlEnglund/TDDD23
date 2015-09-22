@@ -2,6 +2,11 @@ package com.mygdx.game.gamestates;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.mygdx.game.managers.GameStateManager;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
@@ -11,7 +16,12 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
  */
 public class PlayState extends GameState {
 
-    ShapeRenderer shapeRenderer;
+    ShapeRenderer playerObject;
+    TiledMap tiledMap;
+    TiledMapRenderer tiledMapRenderer;
+    OrthographicCamera camera;
+
+
 
     public PlayState(GameStateManager gsm) {
         super(gsm);
@@ -19,45 +29,55 @@ public class PlayState extends GameState {
 
     @Override
     public void init() {
-        shapeRenderer = new ShapeRenderer();
+        playerObject = new ShapeRenderer();
+        tiledMap = new TmxMapLoader().load("assets/levelOne.tmx");
+        tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, 512, 512);
+        camera.update();
+
+
     }
 
     @Override
     public void update(float dt) {
-       // System.out.println("PLAY STATE UPDATING");
         handleInput();
     }
 
     @Override
     public void draw() {
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(0, 1, 0, 1);
-        shapeRenderer.rect(5, 5, 20, 20);
-        //shapeRenderer.circle(x, y, radius);
-        shapeRenderer.end();
+        tiledMapRenderer.setView(camera);
+        tiledMapRenderer.render();
+        playerObject.begin(ShapeRenderer.ShapeType.Filled);
+        playerObject.setColor(0, 1, 0, 1);
+        playerObject.rect(250, 250, 20, 20);
+        playerObject.end();
+        camera.update();
+
+
+
     }
 
     @Override
     public void handleInput() {
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
             if(Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT))
-                shapeRenderer.translate(-10, 0, 0);
-
+                playerObject.translate(-5, 0, 0);
             else
-                shapeRenderer.translate(-10, 0, 0);
+                playerObject.translate(-5, 0, 0);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
             if(Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT))
-                shapeRenderer.translate(10, 0, 0);
+                playerObject.translate(5, 0, 0);
             else
-                shapeRenderer.translate(10, 0, 0);
+                playerObject.translate(5, 0, 0);
         }
 
         if(Gdx.input.isKeyPressed(Input.Keys.UP)){
-                shapeRenderer.translate(0, 10, 0);
+            playerObject.translate(0, 5, 0);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
-                shapeRenderer.translate(0, -10, 0);
+            playerObject.translate(0, -5, 0);
         }
     }
 
