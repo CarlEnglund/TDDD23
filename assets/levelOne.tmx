@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="16" height="16" tilewidth="32" tileheight="32" nextobjectid="14">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="16" height="16" tilewidth="32" tileheight="32" nextobjectid="17">
  <tileset firstgid="1" name="SuperTile" tilewidth="32" tileheight="32" tilecount="42">
   <image source="cave_tiles.png" width="254" height="204"/>
  </tileset>
@@ -16,5 +16,14 @@
   <object id="6" x="295" y="292"/>
   <object id="7" x="141" y="305"/>
   <object id="8" x="342" y="153"/>
+  <object id="14" x="228" y="161">
+   <polyline points="0,0 29,-1 29,29 -3,32 -1,4"/>
+  </object>
+  <object id="15" x="354" y="292">
+   <polyline points="0,0 33,-1 29,27 0,27 0,6"/>
+  </object>
+  <object id="16" x="98" y="289">
+   <polyline points="0,0 28,-1 28,29 -4,31 1,0"/>
+  </object>
  </objectgroup>
 </map>
