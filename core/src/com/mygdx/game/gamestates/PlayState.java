@@ -10,6 +10,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
@@ -29,10 +30,11 @@ public class PlayState extends GameState {
     OrthographicCamera camera;
     Texture texture;
     SpriteBatch batch;
+    ShapeRenderer sr;
 
     private World world;
     private Box2DDebugRenderer b2dr;
-    private Body player;
+    private Body player, object;
 
 
 
@@ -44,6 +46,7 @@ public class PlayState extends GameState {
     @Override
     public void init() {
         playerObject = new ShapeRenderer();
+
         tiledMap = new TmxMapLoader().load("assets/levelOne.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
         camera = new OrthographicCamera();
@@ -57,7 +60,9 @@ public class PlayState extends GameState {
         texture = new Texture("assets/splash.png");
 
 
-        player = createBox(100f, 200f, 16f, 16f, false);
+
+        player = createBox(150f, 200f, 16f, 16f, false);
+        object = createBox(150f, 184f, 16f, 16f, false);
 
         TiledObjectUtil.parseTiledObjectLayer(world, tiledMap.getLayers().get("collision-layer").getObjects());
 
@@ -71,18 +76,25 @@ public class PlayState extends GameState {
         world.step(1 / 60f, 6, 2);
         inputUpdate(dt);
 
+        tiledMapRenderer.setView(camera);
+        batch.setProjectionMatrix(camera.combined);
+
     }
 
     @Override
     public void draw() {
         update(Gdx.graphics.getDeltaTime());
 
+
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render();
         batch.begin();
             batch.draw(texture, player.getPosition().x * 70 - (texture.getWidth() / 2), player.getPosition().y * 70 - (texture.getHeight() / 2));
+            batch.draw(texture, object.getPosition().x * 70 - (texture.getWidth() / 2), object.getPosition().y * 70 - (texture.getHeight() / 2));
         batch.end();
         camera.update();
+        //b2dr.render(world, camera.combined.scl(70));
+
 
 
 
@@ -113,7 +125,7 @@ public class PlayState extends GameState {
 
     @Override
     public void dispose() {
-
+        tiledMap.dispose();
     }
 
     public Body createBox(float x, float y, float width, float height, boolean isStatic) {
@@ -131,6 +143,7 @@ public class PlayState extends GameState {
         // init pBody in world
         pBody = world.createBody(bdef);
 
+
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(width / 70, height / 70); // set from center, we want 32x32 box so we divide by 2
 
@@ -142,23 +155,41 @@ public class PlayState extends GameState {
     }
 
     public void inputUpdate(float dt) {
-        int horizontalForce = 0;
 
-        if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            horizontalForce -= 1;
-            System.out.println("LEFT");
+        player.setGravityScale(0);
+        object.setGravityScale(0);
+        object.setLinearDamping(100f);
+
+
+        if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
+
+
+            player.applyForceToCenter(new Vector2(-184f, 0), false);
+
+            Vector2 vectorObject = object.getPosition();
+
+            if(vectorObject.x < 0.7 && vectorObject.y < 6.8)
+                System.out.println("YOU WON!");
+
+
         }
-        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            horizontalForce += 1;
+        if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
+
             System.out.println("RIGHT");
+            player.applyForceToCenter(new Vector2(184f, 0), false);
         }
         // only update once on key press
         if(Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
-            player.applyForceToCenter(new Vector2(0, 200f), false);
+            player.applyForceToCenter(new Vector2(0, 184f), false);
             System.out.println("UP");
         }
 
-        player.setLinearVelocity(horizontalForce * 5, player.getLinearVelocity().y);
+        if(Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
+            player.applyForceToCenter(new Vector2(0, -184f), false);
+            System.out.println("DOWN");
+        }
+        player.setLinearVelocity(0, 0);
+
     }
 
 }
