@@ -26,4 +26,7 @@
    <polyline points="0,0 28,-1 28,29 -4,31 1,0"/>
   </object>
  </objectgroup>
+ <imagelayer name="Keys" x="35" y="38">
+  <image source="key.png"/>
+ </imagelayer>
 </map>

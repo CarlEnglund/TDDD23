@@ -28,7 +28,7 @@ public class PlayState extends GameState {
     TiledMap tiledMap;
     TiledMapRenderer tiledMapRenderer;
     OrthographicCamera camera;
-    Texture playerTexture, objectTexture;
+    Texture playerTexture, closedChestTexture, openChestTexture;
     SpriteBatch batch;
     ShapeRenderer sr;
 
@@ -58,7 +58,8 @@ public class PlayState extends GameState {
         world = new World(new Vector2(0, -9.8f), false);
         b2dr = new Box2DDebugRenderer();
         playerTexture = new Texture("assets/dwarf.png");
-        objectTexture = new Texture("assets/chest.png");
+        closedChestTexture = new Texture("assets/chestclosed.png");
+        openChestTexture = new Texture("assets/chestopen.png");
 
 
 
@@ -79,6 +80,7 @@ public class PlayState extends GameState {
 
         tiledMapRenderer.setView(camera);
         batch.setProjectionMatrix(camera.combined);
+        checkCorrectPostion();
 
     }
 
@@ -91,7 +93,10 @@ public class PlayState extends GameState {
         tiledMapRenderer.render();
         batch.begin();
             batch.draw(playerTexture, player.getPosition().x * 70 - (playerTexture.getWidth() / 2), player.getPosition().y * 70 - (playerTexture.getHeight() / 2));
-            batch.draw(objectTexture, object.getPosition().x * 70 - (objectTexture.getWidth() / 2), object.getPosition().y * 70 - (objectTexture.getHeight() / 2));
+            if(!checkCorrectPostion())
+                batch.draw(closedChestTexture, object.getPosition().x * 70 - (closedChestTexture.getWidth() / 2), object.getPosition().y * 70 - (closedChestTexture.getHeight() / 2));
+            else
+                batch.draw(openChestTexture, object.getPosition().x * 70 - (openChestTexture.getWidth() / 2), object.getPosition().y * 70 - (openChestTexture.getHeight() / 2));
         batch.end();
         camera.update();
         //b2dr.render(world, camera.combined.scl(70));
@@ -165,13 +170,8 @@ public class PlayState extends GameState {
         if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
 
 
-
             player.applyForceToCenter(new Vector2(-184f, 0), false);
 
-            Vector2 vectorObject = object.getPosition();
-
-            if(vectorObject.x < 0.7 && vectorObject.y < 6.8)
-                System.out.println("YOU WON!");
 
 
         }
@@ -192,6 +192,11 @@ public class PlayState extends GameState {
         }
         player.setLinearVelocity(0, 0);
 
+    }
+
+    public boolean checkCorrectPostion() {
+        Vector2 vectorObject = object.getPosition();
+        return(vectorObject.x < 0.7 && vectorObject.y < 6.8);
     }
 
 }
