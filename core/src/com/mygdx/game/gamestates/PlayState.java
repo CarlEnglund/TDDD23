@@ -2,6 +2,7 @@ package com.mygdx.game.gamestates;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -31,7 +32,8 @@ public class PlayState extends GameState {
     Texture playerTexture, closedChestTexture, openChestTexture;
     SpriteBatch batch;
     ShapeRenderer sr;
-
+    Sound sound;
+    boolean playedBefore = false;
     private World world;
     private Box2DDebugRenderer b2dr;
     private Body player, object;
@@ -60,6 +62,7 @@ public class PlayState extends GameState {
         playerTexture = new Texture("assets/dwarf.png");
         closedChestTexture = new Texture("assets/chestclosed.png");
         openChestTexture = new Texture("assets/chestopen.png");
+        sound = Gdx.audio.newSound(Gdx.files.internal("assets/win.mp3"));
 
 
 
@@ -95,8 +98,13 @@ public class PlayState extends GameState {
             batch.draw(playerTexture, player.getPosition().x * 70 - (playerTexture.getWidth() / 2), player.getPosition().y * 70 - (playerTexture.getHeight() / 2));
             if(!checkCorrectPostion())
                 batch.draw(closedChestTexture, object.getPosition().x * 70 - (closedChestTexture.getWidth() / 2), object.getPosition().y * 70 - (closedChestTexture.getHeight() / 2));
-            else
+            else {
                 batch.draw(openChestTexture, object.getPosition().x * 70 - (openChestTexture.getWidth() / 2), object.getPosition().y * 70 - (openChestTexture.getHeight() / 2));
+                if(!playedBefore) {
+                    sound.play(1.0f);
+                    playedBefore = true;
+                }
+            }
         batch.end();
         camera.update();
         //b2dr.render(world, camera.combined.scl(70));

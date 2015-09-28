@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="16" height="16" tilewidth="32" tileheight="32" nextobjectid="17">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="16" height="16" tilewidth="32" tileheight="32" nextobjectid="18">
  <tileset firstgid="1" name="SuperTile" tilewidth="32" tileheight="32" tilecount="42">
   <image source="cave_tiles.png" width="254" height="204"/>
  </tileset>
  <layer name="Tile Layer 1" width="16" height="16">
   <data encoding="base64" compression="zlib">
-   eJxjYmBgYKIQkwuYgZhxGOvnHGD76a2fkH/R5Qeb+4eifgEKMQBIgwF1
+   eJxjYmBgYKIQkwuYgZiRivp5SMC49OMD6PKE9HNSqB+Xu0nRjw9QWz8h/3KiiZFjP6n68ZlJiv3Y4oBQ+sWX9ojRTwiA9AtQiAFlLwOR
   </data>
  </layer>
  <objectgroup name="collision-layer">
@@ -24,6 +24,9 @@
   </object>
   <object id="16" x="98" y="289">
    <polyline points="0,0 28,-1 28,29 -4,31 1,0"/>
+  </object>
+  <object id="17" x="127" y="415">
+   <polyline points="0,0 0,-284 225,-286 225,-224 98,-223 95,35 286,34 286,-124 225,-125 225,-95 256,-96 256,-30 195,-31 191,1 130,1 129,-30 159,-30 159,-62 130,-62 129,-190 256,-191 256,-288 318,-288 318,-319 -31,-320 -32,1 0,0"/>
   </object>
  </objectgroup>
  <imagelayer name="Keys" x="35" y="38">
