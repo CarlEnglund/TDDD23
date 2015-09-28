@@ -28,7 +28,7 @@ public class PlayState extends GameState {
     TiledMap tiledMap;
     TiledMapRenderer tiledMapRenderer;
     OrthographicCamera camera;
-    Texture texture;
+    Texture playerTexture, objectTexture;
     SpriteBatch batch;
     ShapeRenderer sr;
 
@@ -57,7 +57,8 @@ public class PlayState extends GameState {
 
         world = new World(new Vector2(0, -9.8f), false);
         b2dr = new Box2DDebugRenderer();
-        texture = new Texture("assets/splash.png");
+        playerTexture = new Texture("assets/dwarf.png");
+        objectTexture = new Texture("assets/chest.png");
 
 
 
@@ -89,8 +90,8 @@ public class PlayState extends GameState {
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render();
         batch.begin();
-            batch.draw(texture, player.getPosition().x * 70 - (texture.getWidth() / 2), player.getPosition().y * 70 - (texture.getHeight() / 2));
-            batch.draw(texture, object.getPosition().x * 70 - (texture.getWidth() / 2), object.getPosition().y * 70 - (texture.getHeight() / 2));
+            batch.draw(playerTexture, player.getPosition().x * 70 - (playerTexture.getWidth() / 2), player.getPosition().y * 70 - (playerTexture.getHeight() / 2));
+            batch.draw(objectTexture, object.getPosition().x * 70 - (objectTexture.getWidth() / 2), object.getPosition().y * 70 - (objectTexture.getHeight() / 2));
         batch.end();
         camera.update();
         //b2dr.render(world, camera.combined.scl(70));
@@ -162,6 +163,7 @@ public class PlayState extends GameState {
 
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
+
 
 
             player.applyForceToCenter(new Vector2(-184f, 0), false);
