@@ -16,6 +16,7 @@ public class Game extends ApplicationAdapter {
 	@Override
 	public void create () {
 		gsm = new GameStateManager();
+		gsm.setState(GameStateManager.MENU);
 	}
 
 	@Override

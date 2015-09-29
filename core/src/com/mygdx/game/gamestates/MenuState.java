@@ -27,7 +27,6 @@ public class MenuState extends GameState {
 
     public MenuState(GameStateManager gsm) {
         super(gsm);
-
     }
 
     @Override
@@ -86,6 +85,9 @@ public class MenuState extends GameState {
                 currentItem++;
                 return;
             }
+        }
+        if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+            gsm.setState(GameStateManager.PLAY);
         }
     }
 
