@@ -38,12 +38,6 @@ public class PlayState extends GameState {
     private Box2DDebugRenderer b2dr;
     private Body player, object, object1;
 
-
-
-
-
-
-
     public PlayState(GameStateManager gsm) {
         super(gsm);
     }
@@ -52,7 +46,7 @@ public class PlayState extends GameState {
     public void init() {
         playerObject = new ShapeRenderer();
 
-        tiledMap = new TmxMapLoader().load("assets/levelOne.tmx");
+        tiledMap = new TmxMapLoader().load("assets/levelTwo.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 512, 512);
@@ -67,23 +61,16 @@ public class PlayState extends GameState {
         openChestTexture = new Texture("assets/chestopen.png");
         sound = Gdx.audio.newSound(Gdx.files.internal("assets/win.mp3"));
 
-
-
-
-
         player = createBox(150f, 200f, 16f, 16f, false);
         object = createBox(150f, 184f, 16f, 16f, false);
         object1 = createBox(170f, 184f, 16f, 16f, false);
 
         TiledObjectUtil.parseTiledObjectLayer(world, tiledMap.getLayers().get("collision-layer").getObjects());
 
-
-
     }
 
     @Override
     public void update(float dt) {
-        //handleInput();
         world.step(1 / 60f, 6, 2);
         inputUpdate(dt);
 
@@ -98,6 +85,7 @@ public class PlayState extends GameState {
         update(Gdx.graphics.getDeltaTime());
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render();
+
         batch.begin();
             batch.draw(playerTexture, player.getPosition().x * 70 - (playerTexture.getWidth() / 2), player.getPosition().y * 70 - (playerTexture.getHeight() / 2));
             if(!checkCorrectPostion()) {
@@ -110,17 +98,12 @@ public class PlayState extends GameState {
             if(!playedBefore) {
                     sound.play(1.0f);
                     playedBefore = true;
-                    gsm.setState(GameStateManager.MENU);
-
+                    //gsm.setState(GameStateManager.MENU);
                 }
             }
         batch.end();
         camera.update();
         //b2dr.render(world, camera.combined.scl(70));
-
-
-
-
     }
 
     @Override
@@ -143,6 +126,13 @@ public class PlayState extends GameState {
         }
         if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
             playerObject.translate(0, -5, 0);
+        }
+
+        //Does not work
+        if(Gdx.input.isButtonPressed(Input.Keys.R)) {
+            System.out.println("Pressed reset");
+            init();
+
         }
     }
 
@@ -178,33 +168,25 @@ public class PlayState extends GameState {
     }
 
     public void inputUpdate(float dt) {
-
         player.setGravityScale(0);
         object.setGravityScale(0);
         object1.setGravityScale(0);
         object.setLinearDamping(100f);
         object1.setLinearDamping(100f);
 
-
+        //only update once on key press
         if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
-
-
             player.applyForceToCenter(new Vector2(-184f, 0), false);
-
-
 
         }
         if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
-
             System.out.println("RIGHT");
             player.applyForceToCenter(new Vector2(184f, 0), false);
         }
-        // only update once on key press
         if(Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
             player.applyForceToCenter(new Vector2(0, 184f), false);
             System.out.println("UP");
         }
-
         if(Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
             player.applyForceToCenter(new Vector2(0, -184f), false);
             System.out.println("DOWN");
@@ -216,9 +198,7 @@ public class PlayState extends GameState {
     public boolean checkCorrectPostion() {
         Vector2 vectorObject = object.getPosition();
       //  Vector2 vectorObject1 = object1.getPosition();
-
-
-            return (((vectorObject.x < 0.7 && vectorObject.y < 6.8)));
+        return (((vectorObject.x < 0.7 && vectorObject.y < 6.8)));
 
     }
 

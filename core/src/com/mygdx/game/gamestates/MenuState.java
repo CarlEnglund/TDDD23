@@ -24,7 +24,6 @@ public class MenuState extends GameState {
     private int currentItem;
     private String[] menuItems;
 
-
     public MenuState(GameStateManager gsm) {
         super(gsm);
     }
@@ -52,9 +51,8 @@ public class MenuState extends GameState {
 
     @Override
     public void draw() {
-
-
         sb.begin();
+
             //Draw title
             titleFont.draw(sb, title, 200, 300);
 
