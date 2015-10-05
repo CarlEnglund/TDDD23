@@ -23,7 +23,7 @@ import com.mygdx.game.utils.TiledObjectUtil;
 /**
  * Created by englund on 10/09/15.
  */
-public class PlayState extends GameState {
+public class LevelTwoState extends GameState {
 
     ShapeRenderer playerObject;
     TiledMap tiledMap;
@@ -38,7 +38,7 @@ public class PlayState extends GameState {
     private Box2DDebugRenderer b2dr;
     private Body player, object, object1;
 
-    public PlayState(GameStateManager gsm) {
+    public LevelTwoState(GameStateManager gsm) {
         super(gsm);
     }
 
@@ -63,7 +63,7 @@ public class PlayState extends GameState {
 
         player = createBox(150f, 200f, 16f, 16f, false);
         object = createBox(150f, 184f, 16f, 16f, false);
-        object1 = createBox(170f, 184f, 16f, 16f, false);
+       // object1 = createBox(170f, 184f, 16f, 16f, false);
 
         TiledObjectUtil.parseTiledObjectLayer(world, tiledMap.getLayers().get("collision-layer").getObjects());
 
@@ -98,44 +98,13 @@ public class PlayState extends GameState {
             if(!playedBefore) {
                     sound.play(1.0f);
                     playedBefore = true;
-                    //gsm.setState(GameStateManager.MENU);
+                    gsm.setState(GameStateManager.MENU);
                 }
             }
         batch.end();
         camera.update();
-        //b2dr.render(world, camera.combined.scl(70));
+        b2dr.render(world, camera.combined.scl(70));
     }
-
-    @Override
-    public void handleInput() {
-        if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-            if(Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT))
-                playerObject.translate(-5, 0, 0);
-            else
-                playerObject.translate(-5, 0, 0);
-        }
-        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
-            if(Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT))
-                playerObject.translate(5, 0, 0);
-            else
-                playerObject.translate(5, 0, 0);
-        }
-
-        if(Gdx.input.isKeyPressed(Input.Keys.UP)){
-            playerObject.translate(0, 5, 0);
-        }
-        if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
-            playerObject.translate(0, -5, 0);
-        }
-
-        //Does not work
-        if(Gdx.input.isButtonPressed(Input.Keys.R)) {
-            System.out.println("Pressed reset");
-            init();
-
-        }
-    }
-
     @Override
     public void dispose() {
         tiledMap.dispose();
@@ -170,9 +139,7 @@ public class PlayState extends GameState {
     public void inputUpdate(float dt) {
         player.setGravityScale(0);
         object.setGravityScale(0);
-        object1.setGravityScale(0);
         object.setLinearDamping(100f);
-        object1.setLinearDamping(100f);
 
         //only update once on key press
         if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
@@ -192,6 +159,10 @@ public class PlayState extends GameState {
             System.out.println("DOWN");
         }
         player.setLinearVelocity(0, 0);
+        if(Gdx.input.isKeyJustPressed(Input.Keys.R)) {
+            System.out.println("Pressed reset");
+            restart();
+        }
 
     }
 
@@ -199,6 +170,15 @@ public class PlayState extends GameState {
         Vector2 vectorObject = object.getPosition();
       //  Vector2 vectorObject1 = object1.getPosition();
         return (((vectorObject.x < 0.7 && vectorObject.y < 6.8)));
+
+    }
+
+    public void restart() {
+        //Set everything back to start
+
+        player = createBox(150f, 200f, 16f, 16f, false);
+        object = createBox(150f, 184f, 16f, 16f, false);
+        object1 = createBox(170f, 184f, 16f, 16f, false);
 
     }
 
