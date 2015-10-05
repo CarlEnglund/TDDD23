@@ -36,7 +36,7 @@ public class LevelOneState extends GameState {
     boolean playedBefore = false;
     private World world;
     private Box2DDebugRenderer b2dr;
-    private Body player, object, object1;
+    private Body player, object;
 
     public LevelOneState(GameStateManager gsm) {
         super(gsm);
@@ -89,11 +89,9 @@ public class LevelOneState extends GameState {
         batch.draw(playerTexture, player.getPosition().x * 70 - (playerTexture.getWidth() / 2), player.getPosition().y * 70 - (playerTexture.getHeight() / 2));
         if(!checkCorrectPostion()) {
             batch.draw(closedChestTexture, object.getPosition().x * 70 - (closedChestTexture.getWidth() / 2), object.getPosition().y * 70 - (closedChestTexture.getHeight() / 2));
-            //  batch.draw(closedChestTexture, object1.getPosition().x * 70 - (closedChestTexture.getWidth() / 2), object1.getPosition().y * 70 - (closedChestTexture.getHeight() / 2));
         }
         else {
             batch.draw(openChestTexture, object.getPosition().x * 70 - (openChestTexture.getWidth() / 2), object.getPosition().y * 70 - (openChestTexture.getHeight() / 2));
-            //  batch.draw(openChestTexture, object1.getPosition().x * 70 - (openChestTexture.getWidth() / 2), object1.getPosition().y * 70 - (openChestTexture.getHeight() / 2));
             if(!playedBefore) {
                 sound.play(1.0f);
                 playedBefore = true;
@@ -102,7 +100,7 @@ public class LevelOneState extends GameState {
         }
         batch.end();
         camera.update();
-        b2dr.render(world, camera.combined.scl(70));
+        //b2dr.render(world, camera.combined.scl(70));
     }
 
     @Override
@@ -157,30 +155,24 @@ public class LevelOneState extends GameState {
         }
         player.setLinearVelocity(0, 0);
         if(Gdx.input.isKeyJustPressed(Input.Keys.R)) {
-            System.out.println("Pressed reset");
             restart();
-
         }
 
     }
 
     public boolean checkCorrectPostion() {
         Vector2 vectorObject = object.getPosition();
-        //  Vector2 vectorObject1 = object1.getPosition();
         return (((vectorObject.x < 0.7 && vectorObject.y < 6.8)));
 
     }
 
     public void restart() {
         //Set everything back to start
-
         world.dispose();
         world = new World(new Vector2(0, -9.8f), false);
         player = createBox(150f, 200f, 16f, 16f, false);
         object = createBox(150f, 184f, 16f, 16f, false);
         TiledObjectUtil.parseTiledObjectLayer(world, tiledMap.getLayers().get("collision-layer").getObjects());
-
-
     }
 
 }
