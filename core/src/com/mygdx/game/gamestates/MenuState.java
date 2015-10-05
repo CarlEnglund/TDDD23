@@ -69,6 +69,7 @@ public class MenuState extends GameState {
 
 
     }
+
     public void handleInput() {
         if(Gdx.input.isKeyJustPressed(Input.Keys.UP)){
             if(currentItem > 0) {

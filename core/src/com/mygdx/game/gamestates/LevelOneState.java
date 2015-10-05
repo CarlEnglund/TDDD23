@@ -102,7 +102,7 @@ public class LevelOneState extends GameState {
         }
         batch.end();
         camera.update();
-        //b2dr.render(world, camera.combined.scl(70));
+        b2dr.render(world, camera.combined.scl(70));
     }
 
     @Override
@@ -174,9 +174,12 @@ public class LevelOneState extends GameState {
     public void restart() {
         //Set everything back to start
 
+        world.dispose();
+        world = new World(new Vector2(0, -9.8f), false);
         player = createBox(150f, 200f, 16f, 16f, false);
         object = createBox(150f, 184f, 16f, 16f, false);
-        object1 = createBox(170f, 184f, 16f, 16f, false);
+        TiledObjectUtil.parseTiledObjectLayer(world, tiledMap.getLayers().get("collision-layer").getObjects());
+
 
     }
 
