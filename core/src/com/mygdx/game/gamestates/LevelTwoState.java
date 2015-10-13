@@ -95,12 +95,14 @@ public class LevelTwoState extends GameState {
             if(!playedBefore) {
                     sound.play(1.0f);
                     playedBefore = true;
-                    gsm.setState(GameStateManager.MENU);
+                    gsm.setState(GameStateManager.LEVELTHREE);
                 }
             }
         batch.end();
         camera.update();
-        b2dr.render(world, camera.combined.scl(70));
+
+        
+        // b2dr.render(world, camera.combined.scl(70));
     }
     @Override
     public void dispose() {
@@ -138,6 +140,7 @@ public class LevelTwoState extends GameState {
         object.setGravityScale(0);
         object.setLinearDamping(100f);
 
+
         //only update once on key press
         if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
             player.applyForceToCenter(new Vector2(-184f, 0), false);
@@ -163,8 +166,7 @@ public class LevelTwoState extends GameState {
     }
 
     public boolean checkCorrectPostion() {
-        Vector2 vectorObject = object.getPosition();
-        return (((vectorObject.x < 0.7 && vectorObject.y < 6.8)));
+        return (Math.round(object.getPosition().x) == 5 && Math.round(object.getPosition().y) == 2);
 
     }
 
@@ -175,6 +177,7 @@ public class LevelTwoState extends GameState {
         player = createBox(150f, 200f, 16f, 16f, false);
         object = createBox(150f, 184f, 16f, 16f, false);
         TiledObjectUtil.parseTiledObjectLayer(world, tiledMap.getLayers().get("collision-layer").getObjects());
+
 
     }
 

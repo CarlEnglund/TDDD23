@@ -1,55 +1,43 @@
 package com.mygdx.game.gamestates;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
+import com.badlogic.gdx.utils.Select;
 import com.mygdx.game.managers.GameStateManager;
-import javafx.scene.media.Media;
-import javafx.scene.media.VideoTrack;
 
 /**
- * Created by englund on 10/09/15.
+ * Created by englund on 13/10/15.
  */
-public class MenuState extends GameState {
+public class SelectLevelState extends GameState {
 
     private SpriteBatch sb;
-
+    private String[] levelItems;
     private BitmapFont titleFont;
     private BitmapFont font;
-
-    private final String title = "Låd-Leif";
-
     private int currentItem;
-    private String[] menuItems;
 
-    public static boolean mode = false;
 
-    public MenuState(GameStateManager gsm) {
-        super(gsm);
-    }
+    private final String title = "Select Level";
 
-    @Override
+    public SelectLevelState(GameStateManager gsm) {super(gsm);}
+
     public void init() {
         sb = new SpriteBatch();
 
-        menuItems = new String[] {
-                "Play from beginning",
-                "Levels",
-                "Quit"
+        levelItems = new String[] {
+                "Level 1",
+                "Level 2",
+                "Level 3"
         };
 
         titleFont = new BitmapFont();
         font = new BitmapFont();
         titleFont.setColor(Color.BLACK);
-
-
     }
 
-    @Override
     public void update(float dt) {
         handleInput();
     }
@@ -58,17 +46,17 @@ public class MenuState extends GameState {
     public void draw() {
         sb.begin();
 
-            //Draw title
-            titleFont.draw(sb, title, 200, 300);
+        //Draw title
+        titleFont.draw(sb, title, 200, 300);
 
-            //Draw menu
-        for(int i = 0; i < menuItems.length; i++) {
+        //Draw menu
+        for(int i = 0; i < levelItems.length; i++) {
             if(currentItem == i)
                 font.setColor(Color.GREEN);
             else
                 font.setColor(Color.WHITE);
 
-            font.draw(sb, menuItems[i], 200, 280 - 20*i);
+            font.draw(sb, levelItems[i], 200, 280 - 20*i);
         }
         sb.end();
 
@@ -83,22 +71,27 @@ public class MenuState extends GameState {
             }
         }
         if(Gdx.input.isKeyJustPressed(Input.Keys.DOWN)){
-            if(currentItem < menuItems.length-1) {
+            if(currentItem < levelItems.length-1) {
                 currentItem++;
                 return;
             }
         }
         if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-            mode = true;
-            if(currentItem == 1)
-                gsm.setState(GameStateManager.LEVELSELECT);
-            else
-                gsm.setState(GameStateManager.LEVELONE);
+            switch(currentItem) {
+                case 0:
+                    gsm.setState(GameStateManager.LEVELONE);
+                    break;
+                case 1:
+                    gsm.setState(GameStateManager.LEVELTWO);
+                    break;
+                case 2:
+                    gsm.setState(GameStateManager.LEVELTHREE);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
-    @Override
-    public void dispose() {
-
-    }
+    public void dispose() {}
 }

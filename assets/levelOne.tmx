@@ -14,7 +14,7 @@
  </tileset>
  <layer name="Tile Layer 1" width="16" height="16">
   <data encoding="base64" compression="zlib">
-   eJxjYmBgYKIQkwuYgZiRDvr9KdBvDsS7gdiZAvu1KbAfHxjVP6pfgEIMAOynAwk=
+   eJxjZGBgYCITMwMxBwP5gItO+v0J6OfEgmHAHIh3A7EzBfZrE7CfXDCqf1Q/PxALkIkFgRgA9vkD+Q==
   </data>
  </layer>
  <objectgroup name="collision-layer">

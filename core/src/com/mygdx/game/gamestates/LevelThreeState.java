@@ -15,42 +15,40 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Timer;
 import com.mygdx.game.managers.GameStateManager;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.mygdx.game.utils.TiledObjectUtil;
-
-import java.awt.*;
 
 
 /**
  * Created by englund on 10/09/15.
  */
-public class LevelOneState extends GameState {
+public class LevelThreeState extends GameState {
 
     ShapeRenderer playerObject;
     TiledMap tiledMap;
     TiledMapRenderer tiledMapRenderer;
     OrthographicCamera camera;
-    Texture playerTexture, closedChestTexture, openChestTexture;
+    Texture playerTexture, redTexture, greenTexture, purpleTexture;
     SpriteBatch batch;
     ShapeRenderer sr;
     Sound sound;
     boolean playedBefore = false;
     private World world;
     private Box2DDebugRenderer b2dr;
-    private Body player, object;
-    Timer clock;
+    private Body player, redChest, greenChest, purpleChest;
 
-    public LevelOneState(GameStateManager gsm) {
+    public LevelThreeState(GameStateManager gsm) {
         super(gsm);
     }
+
+
 
     @Override
     public void init() {
         playerObject = new ShapeRenderer();
 
-        tiledMap = new TmxMapLoader().load("assets/levelOne.tmx");
+        tiledMap = new TmxMapLoader().load("assets/levelThree.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 512, 512);
@@ -61,38 +59,28 @@ public class LevelOneState extends GameState {
         world = new World(new Vector2(0, -9.8f), false);
         b2dr = new Box2DDebugRenderer();
         playerTexture = new Texture("assets/dwarf.png");
-        closedChestTexture = new Texture("assets/chestclosed.png");
-        openChestTexture = new Texture("assets/chestopen.png");
+        redTexture = new Texture("assets/chestclosed.png");
+        greenTexture = new Texture("assets/green.png");
+        purpleTexture = new Texture("assets/purple.png");
         sound = Gdx.audio.newSound(Gdx.files.internal("assets/win.mp3"));
 
-        player = createBox(150f, 200f, 16f, 16f, false);
-        object = createBox(150f, 184f, 16f, 16f, false);
+        player = createBox(210f, 240f, 16f, 16f, false);
+        redChest = createBox(32f, 192f, 16f, 16f, false);
+        greenChest = createBox(235f, 300f, 16f, 16f, false);
+        purpleChest = createBox(260f, 200f, 16f, 16f, false);
 
-        clock = new Timer();
-        if(MenuState.mode)
-        clock.scheduleTask(new Timer.Task() {
-
-            public void run() {
-                restart();
-            }
-        }, 10);
-        TiledObjectUtil.parseTiledObjectLayer(world, tiledMap.getLayers().
-
-                get("collision-layer")
-
-                .
-
-                        getObjects());
+        TiledObjectUtil.parseTiledObjectLayer(world, tiledMap.getLayers().get("Boundaries").getObjects());
 
     }
 
     @Override
     public void update(float dt) {
-            world.step(1 / 60f, 6, 2);
-            inputUpdate(dt);
+        world.step(1 / 60f, 6, 2);
+        inputUpdate(dt);
 
         tiledMapRenderer.setView(camera);
         batch.setProjectionMatrix(camera.combined);
+
         checkCorrectPostion();
 
     }
@@ -106,21 +94,23 @@ public class LevelOneState extends GameState {
         batch.begin();
         batch.draw(playerTexture, player.getPosition().x * 70 - (playerTexture.getWidth() / 2), player.getPosition().y * 70 - (playerTexture.getHeight() / 2));
         if(!checkCorrectPostion()) {
-            batch.draw(closedChestTexture, object.getPosition().x * 70 - (closedChestTexture.getWidth() / 2), object.getPosition().y * 70 - (closedChestTexture.getHeight() / 2));
+            batch.draw(redTexture, redChest.getPosition().x * 70 - (redTexture.getWidth() / 2), redChest.getPosition().y * 70 - (redTexture.getHeight() / 2));
+            batch.draw(greenTexture, greenChest.getPosition().x * 70 - (greenTexture.getWidth() / 2), greenChest.getPosition().y * 70 - (greenTexture.getHeight() / 2));
+            batch.draw(purpleTexture, purpleChest.getPosition().x * 70 - (purpleTexture.getWidth() / 2), purpleChest.getPosition().y * 70 - (purpleTexture.getHeight() / 2));
+
         }
         else {
-            batch.draw(openChestTexture, object.getPosition().x * 70 - (openChestTexture.getWidth() / 2), object.getPosition().y * 70 - (openChestTexture.getHeight() / 2));
             if(!playedBefore) {
                 sound.play(1.0f);
                 playedBefore = true;
-                gsm.setState(GameStateManager.LEVELTWO);
+                gsm.setState(GameStateManager.MENU);
             }
         }
         batch.end();
         camera.update();
+
         //b2dr.render(world, camera.combined.scl(70));
     }
-
     @Override
     public void dispose() {
         tiledMap.dispose();
@@ -148,14 +138,14 @@ public class LevelOneState extends GameState {
         // add fixture to body and dispose
         pBody.createFixture(shape, 1.0f);
         shape.dispose();
-
+        pBody.setLinearDamping(100f);
+        pBody.setGravityScale(0f);
         return pBody;
     }
 
     public void inputUpdate(float dt) {
-        player.setGravityScale(0);
-        object.setGravityScale(0);
-        object.setLinearDamping(100f);
+        player.setLinearDamping(0f);
+
 
         //only update once on key press
         if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
@@ -163,13 +153,16 @@ public class LevelOneState extends GameState {
 
         }
         if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
+            System.out.println("RIGHT");
             player.applyForceToCenter(new Vector2(184f, 0), false);
         }
         if(Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
             player.applyForceToCenter(new Vector2(0, 184f), false);
+            System.out.println("UP");
         }
         if(Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
             player.applyForceToCenter(new Vector2(0, -184f), false);
+            System.out.println("DOWN");
         }
         player.setLinearVelocity(0, 0);
         if(Gdx.input.isKeyJustPressed(Input.Keys.R)) {
@@ -179,11 +172,29 @@ public class LevelOneState extends GameState {
     }
 
     public boolean checkCorrectPostion() {
+        Vector2 red = redChest.getPosition();
+        Vector2 green = greenChest.getPosition();
+        Vector2 purple = purpleChest.getPosition();
 
-        System.out.println("X: " + Math.round(object.getPosition().x));
-        System.out.println("Y: " + Math.round(object.getPosition().y));
+        float l1 = Vector2.len(redChest.getPosition().x, redChest.getPosition().y);
+        float l2 = Vector2.len(greenChest.getPosition().x, greenChest.getPosition().y);
+        float l3 = Vector2.len(purpleChest.getPosition().x, purpleChest.getPosition().y);
 
-        return (Math.round(object.getPosition().x) == 1 && Math.round(object.getPosition().y) == 7);
+        int tot =Math.round(redChest.getWorldPoint(red).x) + Math.round(redChest.getWorldPoint(red).y) +
+        Math.round(greenChest.getWorldPoint(green).x) +
+        Math.round(greenChest.getWorldPoint(green).y) +
+        Math.round(purpleChest.getWorldPoint(purple).x)+
+        Math.round(purpleChest.getWorldPoint(purple).y);
+
+        System.out.println("L1: " + purpleChest.getPosition().x);
+        System.out.println("L2: " + purpleChest.getPosition().y);
+
+        if((Math.round(redChest.getPosition().x) == 1 && Math.round(redChest.getPosition().y) == 1)
+                && (Math.round(greenChest.getPosition().x) == 1 && Math.round(greenChest.getPosition().y) == 7)
+                && (Math.round(purpleChest.getPosition().x) == 7 && Math.round(purpleChest.getPosition().y) == 7))
+            return true;
+
+        return false;
 
 
     }
@@ -193,8 +204,10 @@ public class LevelOneState extends GameState {
         world.dispose();
         world = new World(new Vector2(0, -9.8f), false);
         player = createBox(150f, 200f, 16f, 16f, false);
-        object = createBox(150f, 184f, 16f, 16f, false);
-        TiledObjectUtil.parseTiledObjectLayer(world, tiledMap.getLayers().get("collision-layer").getObjects());
+        redChest = createBox(150f, 184f, 16f, 16f, false);
+        greenChest = createBox(235f, 300f, 16f, 16f, false);
+        purpleChest = createBox(260f, 200f, 16f, 16f, false);
+        TiledObjectUtil.parseTiledObjectLayer(world, tiledMap.getLayers().get("Boundaries").getObjects());
 
     }
 
