@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="16" height="16" tilewidth="32" tileheight="32" nextobjectid="4">
+ <tileset firstgid="1" name="Map" tilewidth="32" tileheight="32" tilecount="42">
+  <image source="cave_tiles.png" width="254" height="204"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="16" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxjZGBgYCITMwMxBwP5gAuHfkYs9pCiH12Mi0T9/EAsgIQ5cbgFl358gAuNTS39sDDDFVaE9KPTtNLPCcXUtp+fQv0wgB736FiQgH5SADX0E3IvIb8AAFr/A7M=
+  </data>
+ </layer>
+ <objectgroup name="Boundaries">
+  <object id="1" x="32" y="36">
+   <polyline points="0,0 -1,446 448,446 449,-5 0,-6 0,-2"/>
+  </object>
+  <object id="2" x="154" y="230">
+   <polyline points="0,0 2,156 230,157 232,-73 10,-73 10,-164 159,-163 160,-97 256,-97 257,182 -23,183 -24,18 -66,20 -64,148 -88,150 -87,-4 -1,-2"/>
+  </object>
+ </objectgroup>
+ <imagelayer name="keys" x="35" y="40">
+  <image source="key.png"/>
+ </imagelayer>
+ <imagelayer name="Copy of keys" x="451" y="41">
+  <image source="key.png"/>
+ </imagelayer>
+ <imagelayer name="Copy of Copy of keys" x="36" y="458">
+  <image source="key.png"/>
+ </imagelayer>
+</map>
