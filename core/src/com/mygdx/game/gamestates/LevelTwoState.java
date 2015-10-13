@@ -101,7 +101,7 @@ public class LevelTwoState extends GameState {
         batch.end();
         camera.update();
 
-        
+
         // b2dr.render(world, camera.combined.scl(70));
     }
     @Override

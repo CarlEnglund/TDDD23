@@ -76,13 +76,7 @@ public class LevelOneState extends GameState {
                 restart();
             }
         }, 10);
-        TiledObjectUtil.parseTiledObjectLayer(world, tiledMap.getLayers().
-
-                get("collision-layer")
-
-                .
-
-                        getObjects());
+        TiledObjectUtil.parseTiledObjectLayer(world, tiledMap.getLayers().get("collision-layer").getObjects());
 
     }
 

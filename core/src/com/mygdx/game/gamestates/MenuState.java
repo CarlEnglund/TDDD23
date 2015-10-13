@@ -39,7 +39,6 @@ public class MenuState extends GameState {
         menuItems = new String[] {
                 "Play from beginning",
                 "Levels",
-                "Quit"
         };
 
         titleFont = new BitmapFont();
