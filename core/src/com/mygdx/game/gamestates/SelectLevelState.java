@@ -94,4 +94,6 @@ public class SelectLevelState extends GameState {
     }
 
     public void dispose() {}
+    public void restart() {};
+    public void timerMode() {};
 }

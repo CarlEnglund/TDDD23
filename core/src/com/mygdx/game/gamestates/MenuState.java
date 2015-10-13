@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import com.badlogic.gdx.utils.Timer;
 import com.mygdx.game.managers.GameStateManager;
 import javafx.scene.media.Media;
 import javafx.scene.media.VideoTrack;
@@ -36,7 +37,7 @@ public class MenuState extends GameState {
     public void init() {
         sb = new SpriteBatch();
 
-        menuItems = new String[] {
+        menuItems = new String[]{
                 "Play from beginning",
                 "Levels",
         };
@@ -57,17 +58,17 @@ public class MenuState extends GameState {
     public void draw() {
         sb.begin();
 
-            //Draw title
-            titleFont.draw(sb, title, 200, 300);
+        //Draw title
+        titleFont.draw(sb, title, 200, 300);
 
-            //Draw menu
-        for(int i = 0; i < menuItems.length; i++) {
-            if(currentItem == i)
+        //Draw menu
+        for (int i = 0; i < menuItems.length; i++) {
+            if (currentItem == i)
                 font.setColor(Color.GREEN);
             else
                 font.setColor(Color.WHITE);
 
-            font.draw(sb, menuItems[i], 200, 280 - 20*i);
+            font.draw(sb, menuItems[i], 200, 280 - 20 * i);
         }
         sb.end();
 
@@ -75,21 +76,21 @@ public class MenuState extends GameState {
     }
 
     public void handleInput() {
-        if(Gdx.input.isKeyJustPressed(Input.Keys.UP)){
-            if(currentItem > 0) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
+            if (currentItem > 0) {
                 currentItem--;
                 return;
             }
         }
-        if(Gdx.input.isKeyJustPressed(Input.Keys.DOWN)){
-            if(currentItem < menuItems.length-1) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
+            if (currentItem < menuItems.length - 1) {
                 currentItem++;
                 return;
             }
         }
-        if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
             mode = true;
-            if(currentItem == 1)
+            if (currentItem == 1)
                 gsm.setState(GameStateManager.LEVELSELECT);
             else
                 gsm.setState(GameStateManager.LEVELONE);
@@ -100,4 +101,8 @@ public class MenuState extends GameState {
     public void dispose() {
 
     }
+
+    public void restart() {
+    }
+
 }

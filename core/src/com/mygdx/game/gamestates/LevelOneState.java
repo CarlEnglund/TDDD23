@@ -68,14 +68,10 @@ public class LevelOneState extends GameState {
         player = createBox(150f, 200f, 16f, 16f, false);
         object = createBox(150f, 184f, 16f, 16f, false);
 
-        clock = new Timer();
-        if(MenuState.mode)
-        clock.scheduleTask(new Timer.Task() {
 
-            public void run() {
-                restart();
-            }
-        }, 10);
+        if(MenuState.mode)
+            timerMode(15);
+
         TiledObjectUtil.parseTiledObjectLayer(world, tiledMap.getLayers().get("collision-layer").getObjects());
 
     }
