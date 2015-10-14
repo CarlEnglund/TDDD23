@@ -17,7 +17,7 @@ import com.mygdx.game.managers.GameStateManager;
 /**
  * Created by englund on 13/10/15.
  */
-public class SelectLevelState extends GameState {
+public class InstructionsState extends GameState {
 
     private SpriteBatch sb;
     private String[] levelItems;
@@ -30,9 +30,10 @@ public class SelectLevelState extends GameState {
     private Texture dwarfTexture;
 
 
-    private final String title = "Select Level";
+    private final String title = "Instructions";
+    private String INSTRUCTIONS;
 
-    public SelectLevelState(GameStateManager gsm) {super(gsm);}
+    public InstructionsState(GameStateManager gsm) {super(gsm);}
 
     public void init() {
         sb = new SpriteBatch();
@@ -43,11 +44,10 @@ public class SelectLevelState extends GameState {
         camera.setToOrtho(false, 512, 512);
         camera.update();
 
-        levelItems = new String[] {
-                "Level 1",
-                "Level 2",
-                "Level 3"
-        };
+        INSTRUCTIONS =  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. \nCras sollicitudin placerat tellus sed " +
+                "convallis. Vestibulum\n sit amet pharetra elit, id congue lorem. Sed \nsodales a sapien eget lobortis. Duis ultrices" +
+                " pharetra sodales. Morbi porta lobortis justo. Integer\n ultrices dolor \negestas urna congue dapibus. Nullam quis urna" +
+                " bibendum elit tristique molestie.\n Fusce eros nibh, mattis quis  \nsollicitudin dapibus, hendrerit ac sem. Vestibulum";
 
         titleFont = new BitmapFont();
         font = new BitmapFont();
@@ -70,47 +70,16 @@ public class SelectLevelState extends GameState {
         sb.draw(dwarfTexture, 365, 280);
 
         //Draw menu
-        for(int i = 0; i < levelItems.length; i++) {
-            if(currentItem == i)
-                font.setColor(Color.BLACK);
-            else
-                font.setColor(Color.WHITE);
 
-            font.draw(sb, levelItems[i], 256, 280 - 20*i);
-        }
+
+            font.draw(sb, INSTRUCTIONS, 150, 280);
+
         sb.end();
 
 
     }
 
     public void handleInput() {
-        if(Gdx.input.isKeyJustPressed(Input.Keys.UP)){
-            if(currentItem > 0) {
-                currentItem--;
-                return;
-            }
-        }
-        if(Gdx.input.isKeyJustPressed(Input.Keys.DOWN)){
-            if(currentItem < levelItems.length-1) {
-                currentItem++;
-                return;
-            }
-        }
-        if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-            switch(currentItem) {
-                case 0:
-                    gsm.setState(GameStateManager.LEVELONE);
-                    break;
-                case 1:
-                    gsm.setState(GameStateManager.LEVELTWO);
-                    break;
-                case 2:
-                    gsm.setState(GameStateManager.LEVELTHREE);
-                    break;
-                default:
-                    break;
-            }
-        }
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             gsm.setState(GameStateManager.MENU);
         }

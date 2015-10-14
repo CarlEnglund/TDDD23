@@ -12,9 +12,12 @@
  <tileset firstgid="235" name="Chest" tilewidth="32" tileheight="32" tilecount="3">
   <image source="chests.png" width="100" height="50"/>
  </tileset>
+ <tileset firstgid="238" name="test" tilewidth="32" tileheight="32" tilecount="324">
+  <image source="test.jpg" width="600" height="600"/>
+ </tileset>
  <layer name="Tile Layer 1" width="16" height="16">
   <data encoding="base64" compression="zlib">
-   eJxjZGBgYCITMwMxBwP5gItO+v0J6OfEgmHAHIh3A7EzBfZrE7CfXDCqf1Q/PxALkIkFgRgA9vkD+Q==
+   eJxjZGBgYCITMwMxBxB7M5KHuQaJfk4seCi5f1T/yNXPD8QCZGJBIAYAlYo6/g==
   </data>
  </layer>
  <objectgroup name="collision-layer">
@@ -28,4 +31,9 @@
  <imagelayer name="Keys" x="35" y="38">
   <image source="key.png"/>
  </imagelayer>
+ <layer name="Instruction" width="16" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFtAYBFOi1AOLdQOxCgRk6FOgdBcMbAAAPYAG0
+  </data>
+ </layer>
 </map>

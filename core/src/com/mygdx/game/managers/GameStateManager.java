@@ -14,6 +14,7 @@ public class GameStateManager {
     public static final int LEVELTWO = 2;
     public static final int LEVELTHREE = 3;
     public static final int LEVELSELECT = 4;
+    public static final int INSTRUCTIONS = 5;
 
     public GameStateManager() {
 
@@ -39,6 +40,9 @@ public class GameStateManager {
         }
         if(state == LEVELSELECT) {
             gameState = new SelectLevelState(this);
+        }
+        if(state == INSTRUCTIONS) {
+            gameState = new InstructionsState(this);
         }
     }
 

@@ -71,6 +71,9 @@ public class LevelThreeState extends GameState {
 
         TiledObjectUtil.parseTiledObjectLayer(world, tiledMap.getLayers().get("Boundaries").getObjects());
 
+        if(MenuState.timerMode)
+            timerMode(15);
+
     }
 
     @Override
@@ -203,11 +206,13 @@ public class LevelThreeState extends GameState {
         //Set everything back to start
         world.dispose();
         world = new World(new Vector2(0, -9.8f), false);
-        player = createBox(150f, 200f, 16f, 16f, false);
-        redChest = createBox(150f, 184f, 16f, 16f, false);
+        player = createBox(210f, 240f, 16f, 16f, false);
+        redChest = createBox(32f, 192f, 16f, 16f, false);
         greenChest = createBox(235f, 300f, 16f, 16f, false);
         purpleChest = createBox(260f, 200f, 16f, 16f, false);
         TiledObjectUtil.parseTiledObjectLayer(world, tiledMap.getLayers().get("Boundaries").getObjects());
+        if(MenuState.timerMode)
+            timerMode(15);
 
     }
 

@@ -66,6 +66,9 @@ public class LevelTwoState extends GameState {
 
         TiledObjectUtil.parseTiledObjectLayer(world, tiledMap.getLayers().get("collision-layer").getObjects());
 
+        if(MenuState.timerMode)
+            timerMode(15);
+
     }
 
     @Override
@@ -177,7 +180,8 @@ public class LevelTwoState extends GameState {
         player = createBox(150f, 200f, 16f, 16f, false);
         object = createBox(150f, 184f, 16f, 16f, false);
         TiledObjectUtil.parseTiledObjectLayer(world, tiledMap.getLayers().get("collision-layer").getObjects());
-
+        if(MenuState.timerMode)
+            timerMode(15);
 
     }
 

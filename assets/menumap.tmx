@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="16" height="16" tilewidth="32" tileheight="32" nextobjectid="1">
+ <tileset firstgid="1" name="map" tilewidth="32" tileheight="32" tilecount="42">
+  <image source="cave_tiles.png" width="254" height="204"/>
+ </tileset>
+ <tileset firstgid="43" name="test" tilewidth="32" tileheight="32" tilecount="324">
+  <image source="test.jpg" width="600" height="600"/>
+ </tileset>
+ <layer name="Ground" width="16" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxjYMAOOpAwOr8Dj1pS8Kj+Uf2j+inXTwkAAHLxa9k=
+  </data>
+ </layer>
+ <layer name="Tile Layer 1" width="16" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxjZGBgYCITMwMxBwP5gGtU/6j+Uf0U6ecHYgEysSAQAwCYlgId
+  </data>
+ </layer>
+</map>
